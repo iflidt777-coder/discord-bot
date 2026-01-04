@@ -3,17 +3,20 @@ import os
 
 TOKEN = os.getenv("TOKEN")
 
-client = discord.Client(intents=discord.Intents.all())
+intents = discord.Intents.default()
+intents.message_content = True
+
+client = discord.Client(intents=intents)
 
 @client.event
 async def on_ready():
-    print(f'Logged in as {client.user}')
+    print("Botが起動しました")
 
 @client.event
 async def on_message(message):
-    if message.author == client.user:
+    if message.author.bot:
         return
-    if message.content == 'hello':
-        await message.channel.send('hey')
+    if message.content == "hello":
+        await message.channel.send("hey")
 
 client.run(TOKEN)
